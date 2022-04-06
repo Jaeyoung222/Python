@@ -1,0 +1,38 @@
+from typing import TextIO
+
+def skip_header(input_file : TextIO) -> str :
+    line = input_file.readline()
+    while line.startswith("#") :
+        line = input_file.readline()
+    return line
+
+def pass_hash(input_line : list) -> list :
+    for i in range(len(input_line)) :
+        if input_line[i].startswith("#") :
+            input_line = input_line[:i]
+            break
+    return input_line
+
+def remove_dot(input_list : list) -> list :
+    removed = []
+    for i in input_list :
+        if i[-1] == "." :
+            removed.append(int(i[:-1]))
+    return removed
+
+def process_file(input_file : TextIO) -> list :
+    line = input_file.readline()
+    line = skip_header(input_file)
+    values = []
+    numbers = []
+    while line :
+        line = line.strip()
+        values = line.split()
+        values = pass_hash(values)
+        numbers += values
+        line = input_file.readline()
+    ans = remove_dot(numbers)
+    return ans
+
+with open("file_practice.txt", "r") as practice :
+    print(max(process_file(practice)))
