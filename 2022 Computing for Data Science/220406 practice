@@ -65,3 +65,39 @@ with open("file_practice.txt", "r") as practice :
 #  674.   81.   80.  108.  229.  399. 1132. 2432. 3574. 2935. 1537.  529.        
 #  485.  662. 1000. 1590. 2657. 3396.    
 
+# 모범답안
+from typing import TextIO
+
+def process_file(input_file : TextIO) -> int :
+    #initialization
+    ans = 0
+    
+    #Process each line
+    for line in input_file :
+        # 1) Skip header
+        if line.startswith("#") :
+            continue
+        
+        # 2) Break a line string into valid number strings
+        # 2-1) Take the string before "#" and remove whitespace
+        #      Now the string has only valid numbers
+        valid_line_str = line.split("#")[0].strip()
+        
+        # 2-2) Break the valid string into number strings
+        #      (the last element will be empty "")
+        valid_nums_str = valid_line_str.split(".")
+        
+        # 3) Process each number string and get the answer
+        for num_str in valid_nums_str :
+            # 3-1) Check if num_str is not empty
+            if num_str :
+                # 3-2) remove whitespace and change the type to int
+                num = int(num_str.strip())
+                # 3-3) Update answer
+                if num > ans :
+                    ans = num
+    return ans
+
+with open("file_practice.txt", "r") as input_file :
+    ans = process_file(input_file)
+    print(ans)
