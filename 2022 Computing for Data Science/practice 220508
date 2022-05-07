@@ -1,0 +1,38 @@
+# build stack class using single linked list
+
+class LinkedNode() :
+    def __init__(self, x: int) -> None :
+        self.val = x
+        self.next = None
+
+class myStack() :
+    def __init__(self) :
+        self.sentinel = LinkedNode(0)
+        self.size = 0
+
+    def push(self, x) :
+        new = LinkedNode(x)
+        new.next = self.sentinel.next
+        self.sentinel.next = new
+        self.size += 1
+
+    def pop(self) :
+        if not self.isEmpty() :
+            removal = self.sentinel.next
+            self.sentinel.next = self.sentinel.next.next
+            removal.next = None
+            self.size -= 1
+
+    def top(self) :
+        if self.sentinel.next != None :
+            return self.sentinel.next.val
+        else :
+            return None
+    def getSize(self) :
+        return self.size
+
+    def isEmpty(self) :
+        if self.size == 0 :
+            return True
+        else :
+            return False
